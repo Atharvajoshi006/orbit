@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import {
   Activity,
   Target,
@@ -12,28 +11,26 @@ import {
   Sparkles,
   Bot,
   Settings,
-  CircleDot,
-  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export interface NavItem {
   name: string;
-  href: string;
   icon: React.ComponentType<{ className?: string }>;
-  active?: boolean;
-  tag?: string;
 }
 
-const mainNav: NavItem[] = [
-  { name: "Pulse", href: "#", icon: Activity, active: true },
-  { name: "Goals", href: "#", icon: Target },
-  { name: "Projects", href: "#", icon: FolderGit2 },
-  { name: "Journal", href: "#", icon: BookOpen },
-  { name: "Memory", href: "#", icon: Brain },
-  { name: "Knowledge", href: "#", icon: Network },
-  { name: "AI Hub", href: "#", icon: Sparkles },
-  { name: "Agents", href: "#", icon: Bot },
+const primaryNav: NavItem[] = [
+  { name: "Pulse", icon: Activity },
+  { name: "Goals", icon: Target },
+  { name: "Projects", icon: FolderGit2 },
+  { name: "Journal", icon: BookOpen },
+  { name: "Memory", icon: Brain },
+  { name: "Knowledge", icon: Network },
+];
+
+const secondaryNav: NavItem[] = [
+  { name: "AI Hub", icon: Sparkles },
+  { name: "Agents", icon: Bot },
 ];
 
 interface SidebarProps {
@@ -50,104 +47,133 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside
       className={cn(
-        "w-64 flex-shrink-0 flex flex-col justify-between h-screen sticky top-0 bg-[#0c0d12] border-r border-white/[0.06] select-none z-30",
+        "w-52 flex-shrink-0 flex flex-col justify-between h-full bg-white/60 backdrop-blur-md border-r border-black/[0.04] select-none text-neutral-800 py-5 px-3.5",
         className
       )}
     >
       {/* Top section: Branding & Nav */}
-      <div className="p-4 flex flex-col gap-6">
+      <div className="flex flex-col space-y-6">
         {/* Brand */}
-        <div className="flex items-center justify-between px-2 pt-1 pb-2">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-neutral-800 to-neutral-900 border border-white/10 flex items-center justify-center relative shadow-sm">
-              <CircleDot className="w-4 h-4 text-sky-400 animate-pulse" />
-            </div>
-            <div>
-              <span className="text-sm font-semibold tracking-wider text-neutral-100 uppercase">
-                ORBIT
-              </span>
-              <span className="ml-2 text-[10px] font-mono px-1.5 py-0.5 rounded bg-white/[0.05] text-neutral-400 border border-white/[0.06]">
-                v0.1
-              </span>
-            </div>
-          </div>
+        <div className="flex items-center space-x-2 px-2.5 pt-1">
+          <svg
+            className="w-4 h-4 text-neutral-900"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <circle cx="12" cy="12" r="3" fill="currentColor" />
+            <ellipse cx="12" cy="12" rx="9" ry="4" transform="rotate(-30 12 12)" strokeWidth="1.5" />
+          </svg>
+          <span className="text-xs font-semibold tracking-wider text-neutral-900 uppercase">
+            ORBIT
+          </span>
         </div>
 
-        {/* Navigation list */}
-        <nav className="space-y-1">
-          <div className="px-2 pb-1 text-[11px] font-medium uppercase tracking-wider text-neutral-500">
-            Ecosystem
-          </div>
-          {mainNav.map((item) => {
-            const isActive = currentTab === item.name;
-            const Icon = item.icon;
-            return (
-              <button
-                key={item.name}
-                type="button"
-                onClick={() => onSelectTab && onSelectTab(item.name)}
-                className={cn(
-                  "w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-all duration-150 group text-left",
-                  isActive
-                    ? "bg-white/[0.06] text-neutral-100 border border-white/[0.08] shadow-sm"
-                    : "text-neutral-400 hover:text-neutral-200 hover:bg-white/[0.03]"
-                )}
-              >
-                <div className="flex items-center space-x-2.5">
-                  <Icon
-                    className={cn(
-                      "w-4 h-4 transition-colors",
-                      isActive
-                        ? "text-sky-400"
-                        : "text-neutral-500 group-hover:text-neutral-300"
-                    )}
-                  />
-                  <span>{item.name}</span>
-                </div>
-                {isActive ? (
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-400 shadow-[0_0_8px_rgba(56,189,248,0.6)]" />
-                ) : (
-                  <span className="text-[10px] text-neutral-600 font-mono opacity-0 group-hover:opacity-100 transition-opacity">
-                    Phase+
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </nav>
+        {/* Navigation lists */}
+        <div className="space-y-4">
+          <nav className="space-y-0.5">
+            {primaryNav.map((item) => {
+              const isActive = currentTab === item.name;
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.name}
+                  type="button"
+                  onClick={() => onSelectTab && onSelectTab(item.name)}
+                  className={cn(
+                    "w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 text-left",
+                    isActive
+                      ? "bg-black/[0.04] text-neutral-900 font-semibold"
+                      : "text-neutral-500 hover:text-neutral-900 hover:bg-black/[0.02]"
+                  )}
+                >
+                  <div className="flex items-center space-x-2.5">
+                    <Icon
+                      className={cn(
+                        "w-3.5 h-3.5 transition-colors stroke-[1.75]",
+                        isActive
+                          ? "text-neutral-900"
+                          : "text-neutral-400 group-hover:text-neutral-700"
+                      )}
+                    />
+                    <span>{item.name}</span>
+                  </div>
+                  {isActive && (
+                    <span className="w-1 h-1 rounded-full bg-neutral-900" />
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+
+          <div className="h-px bg-black/[0.04] mx-2" />
+
+          <nav className="space-y-0.5">
+            {secondaryNav.map((item) => {
+              const isActive = currentTab === item.name;
+              const Icon = item.icon;
+              return (
+                <button
+                  key={item.name}
+                  type="button"
+                  onClick={() => onSelectTab && onSelectTab(item.name)}
+                  className={cn(
+                    "w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 text-left",
+                    isActive
+                      ? "bg-black/[0.04] text-neutral-900 font-semibold"
+                      : "text-neutral-500 hover:text-neutral-900 hover:bg-black/[0.02]"
+                  )}
+                >
+                  <div className="flex items-center space-x-2.5">
+                    <Icon
+                      className={cn(
+                        "w-3.5 h-3.5 transition-colors stroke-[1.75]",
+                        isActive
+                          ? "text-neutral-900"
+                          : "text-neutral-400 group-hover:text-neutral-700"
+                      )}
+                    />
+                    <span>{item.name}</span>
+                  </div>
+                  {isActive && (
+                    <span className="w-1 h-1 rounded-full bg-neutral-900" />
+                  )}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
       </div>
 
-      {/* Bottom section: Settings & User status */}
-      <div className="p-4 border-t border-white/[0.06] space-y-3">
+      {/* Bottom section: Divider & Settings & User status */}
+      <div className="space-y-3">
+        <div className="h-px bg-black/[0.04] mx-2" />
+
         <button
           type="button"
           onClick={() => onSelectTab && onSelectTab("Settings")}
           className={cn(
-            "w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs font-medium transition-colors text-left",
+            "w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors text-left",
             currentTab === "Settings"
-              ? "bg-white/[0.06] text-neutral-100 border border-white/[0.08]"
-              : "text-neutral-400 hover:text-neutral-200 hover:bg-white/[0.03]"
+              ? "bg-black/[0.04] text-neutral-900 font-semibold"
+              : "text-neutral-500 hover:text-neutral-900 hover:bg-black/[0.02]"
           )}
         >
           <div className="flex items-center space-x-2.5">
-            <Settings className="w-4 h-4 text-neutral-500" />
+            <Settings className="w-3.5 h-3.5 text-neutral-400 stroke-[1.75]" />
             <span>Settings</span>
           </div>
-          <span className="text-[10px] text-neutral-600 font-mono">v0.1</span>
         </button>
 
-        {/* User Mini Profile */}
-        <div className="flex items-center justify-between px-3 py-2.5 rounded-lg bg-white/[0.02] border border-white/[0.05]">
-          <div className="flex items-center space-x-2.5">
-            <div className="w-7 h-7 rounded-full bg-gradient-to-tr from-sky-500/20 to-indigo-500/20 border border-sky-400/30 flex items-center justify-center text-xs font-semibold text-sky-200">
-              AJ
-            </div>
-            <div className="flex flex-col">
-              <span className="text-xs font-medium text-neutral-200">Atharva</span>
-              <span className="text-[10px] text-neutral-500">Local Orbit</span>
-            </div>
+        {/* User Profile */}
+        <div className="flex items-center space-x-2.5 px-2.5 py-1.5">
+          <div className="w-6 h-6 rounded-full bg-neutral-900 text-white flex items-center justify-center text-[10px] font-medium">
+            AJ
           </div>
-          <div className="w-2 h-2 rounded-full bg-emerald-400/80 shadow-[0_0_6px_rgba(52,211,153,0.5)]" />
+          <span className="text-xs font-medium text-neutral-700">AJ</span>
         </div>
       </div>
     </aside>

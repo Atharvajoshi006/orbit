@@ -1,5 +1,5 @@
 import React from "react";
-import { Sparkles, Construction, Layers, ArrowLeft } from "lucide-react";
+import { Sparkles, ArrowLeft } from "lucide-react";
 import { Badge } from "@/components/ui/Badge";
 
 interface PlaceholderSectionProps {
@@ -52,31 +52,31 @@ export const PlaceholderSection: React.FC<PlaceholderSectionProps> = ({
   };
 
   return (
-    <div className="max-w-3xl mx-auto py-12 px-4 flex flex-col items-center justify-center text-center space-y-6">
-      <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.08] flex items-center justify-center">
-        <Sparkles className="w-6 h-6 text-sky-400" />
+    <div className="max-w-xl mx-auto py-16 px-4 flex flex-col items-center justify-center text-center space-y-6">
+      <div className="w-12 h-12 rounded-2xl bg-indigo-50 border border-indigo-100/80 flex items-center justify-center shadow-xs">
+        <Sparkles className="w-5 h-5 text-indigo-600" />
       </div>
 
       <div className="space-y-2">
         <div className="flex items-center justify-center gap-2">
-          <h2 className="text-xl font-semibold text-neutral-100">{sectionName}</h2>
+          <h2 className="text-lg font-semibold text-neutral-900">{sectionName}</h2>
           <Badge variant="accent" className="text-[10px] font-mono">
             {meta.phase}
           </Badge>
         </div>
-        <p className="text-sm text-neutral-400 max-w-md mx-auto leading-relaxed">
+        <p className="text-xs sm:text-sm text-neutral-500 max-w-md mx-auto leading-relaxed">
           {meta.description}
         </p>
       </div>
 
-      <div className="p-4 rounded-xl bg-white/[0.02] border border-white/[0.05] max-w-lg text-xs text-neutral-500">
+      <div className="p-3.5 rounded-xl bg-neutral-50/80 border border-black/[0.04] max-w-md text-xs text-neutral-400">
         In accordance with Phase 0 foundation guidelines, future modules are represented as navigational anchors.
       </div>
 
       <button
         type="button"
         onClick={onBackToPulse}
-        className="inline-flex items-center space-x-2 px-4 py-2 rounded-lg bg-white/[0.06] hover:bg-white/[0.1] border border-white/[0.08] text-xs font-medium text-neutral-200 transition-colors"
+        className="inline-flex items-center space-x-2 px-3.5 py-1.5 rounded-lg bg-white hover:bg-neutral-50 border border-black/[0.08] text-xs font-medium text-neutral-700 shadow-xs transition-colors"
       >
         <ArrowLeft className="w-3.5 h-3.5" />
         <span>Return to Pulse</span>
@@ -84,3 +84,4 @@ export const PlaceholderSection: React.FC<PlaceholderSectionProps> = ({
     </div>
   );
 };
+

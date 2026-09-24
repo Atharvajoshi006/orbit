@@ -20,18 +20,18 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
 }) => {
   return (
     <div className={cn("flex items-center justify-between mb-3.5", className)}>
-      <div className="flex items-center space-x-2.5">
-        {icon && <span className="text-neutral-400">{icon}</span>}
-        <h3 className="text-sm font-semibold text-neutral-200 tracking-tight flex items-center gap-2">
+      <div className="flex items-center space-x-2">
+        {icon && <span className="text-neutral-500">{icon}</span>}
+        <h3 className="text-xs font-semibold text-neutral-800 tracking-wider uppercase flex items-center gap-1.5">
           {title}
           {count !== undefined && (
-            <span className="text-xs font-normal text-neutral-500 font-mono">
+            <span className="text-[11px] font-normal text-neutral-400 font-mono">
               ({count})
             </span>
           )}
         </h3>
         {description && (
-          <span className="text-xs text-neutral-500 hidden sm:inline-block">
+          <span className="text-xs text-neutral-400 hidden sm:inline-block">
             — {description}
           </span>
         )}

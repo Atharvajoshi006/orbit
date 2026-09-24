@@ -1,7 +1,7 @@
 export interface GoalItem {
   id: string;
   title: string;
-  status: "In Progress" | "Target Met" | "Queued";
+  status: "In Progress" | "At Risk" | "Target Met" | "Queued";
   progress: number;
   timeframe: string;
 }
@@ -29,11 +29,20 @@ export interface IdeaItem {
   resonance: "High" | "Exploring" | "Seed";
 }
 
+export interface ActivityItem {
+  id: string;
+  title: string;
+  category: string;
+  timeAgo: string;
+}
+
 export interface OrbitSeeingInsight {
   headline: string;
   observation: string;
+  subObservation?: string;
   connectedAreas: string[];
   timestamp: string;
+  actionText?: string;
 }
 
 export interface PulseMockData {
@@ -42,30 +51,39 @@ export interface PulseMockData {
     greeting: string;
     subheading: string;
   };
+  metrics: {
+    goalsSummary: string;
+    projectsSummary: string;
+    learningSummary: string;
+    ideasSummary: string;
+  };
   orbitSeeing: OrbitSeeingInsight;
   goals: GoalItem[];
   projects: ProjectItem[];
   learning: LearningItem[];
   ideas: IdeaItem[];
-  signals: {
-    title: string;
-    detail: string;
-    type: "trend" | "focus" | "synthesis";
-  }[];
+  recentActivity: ActivityItem[];
 }
 
 export const pulseData: PulseMockData = {
   user: {
     name: "AJ",
-    greeting: "Welcome back, AJ.",
+    greeting: "Good evening, AJ.",
     subheading: "Here's what's happening in your orbit.",
+  },
+  metrics: {
+    goalsSummary: "3 active · 1 at risk",
+    projectsSummary: "2 active",
+    learningSummary: "Strong ML momentum",
+    ideasSummary: "4 recent",
   },
   orbitSeeing: {
     headline: "ORBIT IS SEEING",
-    observation:
-      "You've been exploring AI agents across your projects and learning. Active synthesis is building between multi-agent workflows and your core system architecture.",
-    connectedAreas: ["Projects: Agent Sandbox", "Learning: Agent Orchestration", "Goals: ORBIT Foundation"],
-    timestamp: "Observed today",
+    observation: "You've been exploring AI agents across your projects and learning.",
+    subObservation: "There seems to be a common thread forming.",
+    actionText: "Explore this pattern →",
+    connectedAreas: ["Agent Sandbox", "Systems AI", "Multi-Agent Patterns"],
+    timestamp: "Today",
   },
   goals: [
     {
@@ -84,17 +102,17 @@ export const pulseData: PulseMockData = {
     },
     {
       id: "g-3",
-      title: "Deepen Context Architecture Understanding",
-      status: "Queued",
-      progress: 20,
-      timeframe: "Ongoing",
+      title: "Production Evaluation Pipeline",
+      status: "At Risk",
+      progress: 25,
+      timeframe: "Needs Review",
     },
   ],
   projects: [
     {
       id: "p-1",
-      title: "ORBIT Core System",
-      tag: "Ecosystem Architecture",
+      title: "GeoOre",
+      tag: "Spatial Intelligence",
       status: "Active",
       lastActive: "Active today",
     },
@@ -105,72 +123,81 @@ export const pulseData: PulseMockData = {
       status: "Active",
       lastActive: "Yesterday",
     },
-    {
-      id: "p-3",
-      title: "Personal Knowledge Graph Schema",
-      tag: "Data Modeling",
-      status: "Scoping",
-      lastActive: "3 days ago",
-    },
   ],
   learning: [
     {
       id: "l-1",
-      topic: "Transformer Memory Mechanisms",
-      domain: "Machine Learning",
+      topic: "ML Learning",
+      domain: "Neural Architectures",
       level: "Deep Dive",
-      notesCount: 6,
+      notesCount: 8,
     },
     {
       id: "l-2",
-      topic: "Multi-Agent Coordination & Consensus",
+      topic: "Transformer Memory Mechanisms",
       domain: "Systems AI",
       level: "Applied",
-      notesCount: 4,
+      notesCount: 6,
     },
     {
       id: "l-3",
       topic: "Graph Retrieval-Augmented Generation",
       domain: "Knowledge Systems",
       level: "Conceptual",
-      notesCount: 8,
+      notesCount: 5,
     },
   ],
   ideas: [
     {
       id: "i-1",
-      title: "Bidirectional context links between journal and active tasks",
-      context: "Context Engine",
+      title: "AI Agent idea: Context graph routing",
+      context: "Agent Architecture",
       resonance: "High",
     },
     {
       id: "i-2",
-      title: "Background memory synthesis trigger during low cognitive activity",
+      title: "Bidirectional context links between journal & active tasks",
+      context: "Context Engine",
+      resonance: "High",
+    },
+    {
+      id: "i-3",
+      title: "Background memory synthesis trigger during low activity",
       context: "Memory Layer",
       resonance: "Exploring",
     },
     {
-      id: "i-3",
-      title: "Semantic clustering across disjoint project ideas",
+      id: "i-4",
+      title: "Semantic clustering across disjoint project spaces",
       context: "Personal ML",
       resonance: "Seed",
     },
   ],
-  signals: [
+  recentActivity: [
     {
-      title: "Ecosystem Balance",
-      detail: "High activity across projects and learning threads.",
-      type: "focus",
+      id: "a-1",
+      title: "GeoOre",
+      category: "Project Space",
+      timeAgo: "24m ago",
     },
     {
-      title: "Context Density",
-      detail: "18 interconnected nodes across active themes.",
-      type: "synthesis",
+      id: "a-2",
+      title: "ML Learning",
+      category: "Learning Node",
+      timeAgo: "2h ago",
     },
     {
-      title: "Cognitive Focus",
-      detail: "Primary attention clustered around AI Foundation.",
-      type: "trend",
+      id: "a-3",
+      title: "AI Agent idea",
+      category: "Idea Capture",
+      timeAgo: "5h ago",
+    },
+    {
+      id: "a-4",
+      title: "Journal entry",
+      category: "Daily Reflection",
+      timeAgo: "Yesterday",
     },
   ],
 };
+
