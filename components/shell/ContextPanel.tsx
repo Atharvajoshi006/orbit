@@ -18,7 +18,7 @@ export const ContextPanel: React.FC<ContextPanelProps> = ({ className }) => {
   return (
     <aside
       className={cn(
-        "w-64 flex-shrink-0 hidden xl:flex flex-col h-full bg-white/40 backdrop-blur-md border-l border-black/[0.04] p-5 select-none text-neutral-800",
+        "w-64 flex-shrink-0 hidden xl:flex flex-col h-full bg-white border-l border-black/[0.06] p-5 select-none text-neutral-800",
         className
       )}
     >

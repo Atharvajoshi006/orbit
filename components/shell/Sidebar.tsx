@@ -47,7 +47,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <aside
       className={cn(
-        "w-52 flex-shrink-0 flex flex-col justify-between h-full bg-white/60 backdrop-blur-md border-r border-black/[0.04] select-none text-neutral-800 py-5 px-3.5",
+        "w-52 flex-shrink-0 flex flex-col justify-between h-full bg-white border-r border-black/[0.06] select-none text-neutral-800 py-5 px-3.5",
         className
       )}
     >
