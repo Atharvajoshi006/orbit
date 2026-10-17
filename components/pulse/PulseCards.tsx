@@ -3,29 +3,43 @@ import { Target, FolderGit2, BookOpen, Lightbulb } from "lucide-react";
 import { pulseData } from "@/lib/mock-data";
 import { cn } from "@/lib/utils";
 
-export const YourWorldSection: React.FC<{ className?: string }> = ({ className }) => {
+interface YourWorldSectionProps {
+  className?: string;
+  goalsSummary?: string;
+  projectsSummary?: string;
+  learningSummary?: string;
+  ideasSummary?: string;
+}
+
+export const YourWorldSection: React.FC<YourWorldSectionProps> = ({
+  className,
+  goalsSummary,
+  projectsSummary,
+  learningSummary,
+  ideasSummary,
+}) => {
   const items = [
     {
       title: "Goals",
-      value: pulseData.metrics.goalsSummary,
+      value: goalsSummary ?? pulseData.metrics.goalsSummary,
       icon: Target,
       highlight: false,
     },
     {
       title: "Projects",
-      value: pulseData.metrics.projectsSummary,
+      value: projectsSummary ?? pulseData.metrics.projectsSummary,
       icon: FolderGit2,
       highlight: false,
     },
     {
       title: "Learning",
-      value: pulseData.metrics.learningSummary,
+      value: learningSummary ?? pulseData.metrics.learningSummary,
       icon: BookOpen,
       highlight: true,
     },
     {
       title: "Ideas",
-      value: pulseData.metrics.ideasSummary,
+      value: ideasSummary ?? pulseData.metrics.ideasSummary,
       icon: Lightbulb,
       highlight: false,
     },
@@ -66,4 +80,3 @@ export const YourWorldSection: React.FC<{ className?: string }> = ({ className }
     </div>
   );
 };
-

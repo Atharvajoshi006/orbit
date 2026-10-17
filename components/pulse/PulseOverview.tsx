@@ -3,18 +3,46 @@ import { Paperclip, SlidersHorizontal, ArrowUp, Sparkles } from "lucide-react";
 import { pulseData } from "@/lib/mock-data";
 import { OrbitSeeingCard } from "./OrbitSeeingCard";
 import { YourWorldSection } from "./PulseCards";
+import { Goal, Project, Idea } from "@/lib/api";
 
-export const PulseOverview: React.FC = () => {
+export interface PulseOverviewProps {
+  displayName?: string;
+  currentFocus?: string;
+  goals?: Goal[];
+  projects?: Project[];
+  ideas?: Idea[];
+}
+
+export const PulseOverview: React.FC<PulseOverviewProps> = ({
+  displayName,
+  currentFocus,
+  goals,
+  projects,
+  ideas,
+}) => {
+  // Dynamically compute counts for the "YOUR WORLD" cards
+  const activeGoals = goals
+    ? goals.filter((g) => g.status?.toLowerCase() === "active" || g.status === "In Progress").length
+    : undefined;
+  const activeProjects = projects
+    ? projects.filter((p) => p.status?.toLowerCase() === "active").length
+    : undefined;
+  const ideasCount = ideas ? ideas.length : undefined;
+
+  const goalsSummary = activeGoals !== undefined ? `${activeGoals} active` : pulseData.metrics.goalsSummary;
+  const projectsSummary = activeProjects !== undefined ? `${activeProjects} active` : pulseData.metrics.projectsSummary;
+  const ideasSummary = ideasCount !== undefined ? `${ideasCount} recent` : pulseData.metrics.ideasSummary;
+
   return (
     <div className="space-y-10 max-w-3xl mx-auto py-2 pb-6">
       {/* Hero Welcome Header with subtle Editorial Orbital Illustration */}
       <div className="relative flex items-center justify-between pt-2">
         <div className="space-y-1.5 z-10">
           <h1 className="text-2xl sm:text-3xl font-normal tracking-tight text-neutral-900">
-            {pulseData.user.greeting}
+            {displayName ? `Welcome back, ${displayName}` : pulseData.user.greeting}
           </h1>
           <p className="text-sm text-neutral-400 font-normal">
-            {pulseData.user.subheading}
+            {currentFocus || pulseData.user.subheading}
           </p>
         </div>
 
@@ -63,7 +91,11 @@ export const PulseOverview: React.FC = () => {
 
       {/* Your World - Lightweight Horizontal Information */}
       <section aria-label="Your World">
-        <YourWorldSection />
+        <YourWorldSection
+          goalsSummary={goalsSummary}
+          projectsSummary={projectsSummary}
+          ideasSummary={ideasSummary}
+        />
       </section>
 
       {/* Bottom AI Command Bar */}
@@ -110,4 +142,3 @@ export const PulseOverview: React.FC = () => {
     </div>
   );
 };
-
